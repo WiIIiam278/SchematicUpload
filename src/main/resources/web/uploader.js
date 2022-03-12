@@ -45,7 +45,7 @@ function postForm() {
             let successMessage = '<b>Successfully uploaded file</b><br/>\n' +
                 'Use the following command in-game to use your schematic<br/>\n' +
                 '<code>//schem load ' + message + '</code>'
-            showMessage(successMessage, 'lawngreen')
+            showMessage(successMessage, 'var(--accent-color)')
         } else {
             showMessage(message, 'red')
         }

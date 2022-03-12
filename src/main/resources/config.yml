@@ -1,2 +1,8 @@
+language: 'en-gb'
+custom_schematic_directory: ''
 web_server:
   port: 2780
+  url: ''
+upload_limit:
+  period_minutes: 60
+  schematics_per_period: 3

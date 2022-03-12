@@ -7,6 +7,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import net.william278.schematicupload.SchematicUpload;
 import net.william278.schematicupload.upload.UploadManager;
+import net.william278.schematicupload.util.MessageManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.eclipse.jetty.util.IO;
 import org.eclipse.jetty.util.StringUtil;
 
@@ -50,7 +53,8 @@ public class FileUploadServlet extends HttpServlet {
             }
         }
         final String code = codeBuilder.toString();
-        if (!UploadManager.consumeCode(code)) {
+        final UploadManager.ConsumptionResult consumptionResult = UploadManager.consumeCode(code);
+        if (!consumptionResult.consumed()) {
             sendReply(servletResponse, 403, "Invalid or expired code");
             return;
         }
@@ -71,16 +75,21 @@ public class FileUploadServlet extends HttpServlet {
             return;
         }
 
-        // Encode the file name
+        // Encode the file name and set the output file
         String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
-
         Path outputFile = outputDir.resolve(encodedFileName);
         try (InputStream inputStream = filePart.getInputStream();
              OutputStream outputStream = Files.newOutputStream(outputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             IO.copy(inputStream, outputStream);
         }
 
-        // Send confirmation
+        // Send confirmation back to the site and to the user if they are in-game still
+        consumptionResult.user().ifPresent(user -> {
+            Player player = Bukkit.getServer().getPlayer(user);
+            if (player != null) {
+                MessageManager.sendMessage(player, "schematic_upload_complete", "//schem load " + fileName);
+            }
+        });
         sendReply(servletResponse, 200, fileName);
     }
 

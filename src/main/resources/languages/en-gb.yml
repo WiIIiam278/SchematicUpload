@@ -1,0 +1,4 @@
+error_no_permission: '[Error:](#ff3300) [You do not have permission to execute that command.](#ff7e5e)'
+error_invalid_syntax: '[Error:](#ff3300) [Incorrect syntax. Usage: %1%](#ff7e5e)'
+schematic_upload_prompt: '[Upload Schematic](#00fb9a bold)\n[•](white) [Click here](#00fb9a open_link=%1% show_text=&#00fb9a&Click to open in Browser) [to upload your schematic](gray)\n[•](white) [Or, visit %2% and enter this code:](gray) [%3%](#00fb9a show_text=&#00fb9a&Click to copy copy_text=%3%)'
+schematic_upload_complete: '[Successfully uploaded your schematic.](gray) [✔](#00fb9a)\n[•](white) [To copy it to your WorldEdit clipboard, type:](gray) [%1%](#00fb9a show_text=&#00fb9a&Click to suggest command suggest_command=%1%)'

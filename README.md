@@ -20,7 +20,6 @@ be checked and uploaded to the schematics' folder in-game.
 * Super easy to configure, just choose your port and hostname
 * Limit the file size of schematics that can be uploaded
 * Limit how many schematics a player can upload over a given timeframe
-* Supports SSL for added security (via reverse proxy, I can't help you do this, but it can be done!)
 
 ## Screenshots
 

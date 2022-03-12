@@ -5,6 +5,17 @@ api-version: 1.16
 description: Plugin that provides a web server interface for uploading WorldEdit schematics
 commands:
   uploadschematic:
-    usage: /uploadschematic
+    usage: /uploadschematic [reload/about]
     description: Upload a schematic
     aliases: [uploadschem, upschem, uschem]
+
+permissions:
+  schematicupload.command.uploadschematic:
+    description: Lets you upload schematics
+    default: op
+  schematicupload.command.reload:
+    description: Lets you reload the plugin
+    default: op
+  schematicupload.command.about:
+    description: Lets you view plugin information
+    default: true
