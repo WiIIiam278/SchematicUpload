@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Schematic Upload</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito"/>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.2/base64.min.js"></script>
+    <script src="uploader.js"></script>
+</head>
+<body>
+<main>
+    <div id="menu-box">
+        <h2 id="title">Schematic Uploader</h2>
+        <p id="title-description">Upload Minecraft schematics to the server.</p>
+        <!--suppress HtmlUnknownTarget-->
+        <form id="upload-form" action="/api" enctype="multipart/form-data" method="post">
+            <table>
+                <tr>
+                    <td><label for="file-upload">Choose file:</label></td>
+                    <td><input required id="file-upload" name="file-upload" type="file" accept=".schem,.schematic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="input-code">Code:</label></td>
+                    <td><input required id="input-code" name="input-code" type="text"/></td>
+                </tr>
+            </table>
+            <p>Accepted formats: <code>.schematic</code>, <code>.schem</code></p>
+            <input type="submit" value="Upload" id="upload-button"/>
+        </form>
+        <p id="message"></p>
+    </div>
+</main>
+<footer>
+    <p>Schematic Uploader by <a href="https://github.com/WiIIiam278" target="_blank">William278</a></p>
+</footer>
+</body>
+</html>

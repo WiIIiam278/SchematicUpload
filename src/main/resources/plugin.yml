@@ -1,0 +1,9 @@
+name: SchematicUpload
+version: '${version}'
+main: net.william278.schematicupload.SchematicUpload
+api-version: 1.16
+description: Upload schematics via a web interface
+commands:
+  uploadschematic:
+    usage: /uploadschematic
+    aliases: [uploadschem, upschem, uschem]
