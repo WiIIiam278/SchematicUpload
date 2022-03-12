@@ -70,7 +70,7 @@ public class FileUploadServlet extends HttpServlet {
             sendReply(servletResponse, 400, "Invalid file name (too long)");
             return;
         }
-        if (!(fileName.endsWith(".schem") || fileName.equals(".schematic"))) {
+        if (!(fileName.endsWith(".schem") || fileName.endsWith(".schematic"))) {
             sendReply(servletResponse, 400, "Invalid file type");
             return;
         }
