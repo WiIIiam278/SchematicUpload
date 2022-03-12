@@ -80,6 +80,10 @@ public class FileUploadServlet extends HttpServlet {
         Path outputFile = outputDir.resolve(encodedFileName);
         try (InputStream inputStream = filePart.getInputStream();
              OutputStream outputStream = Files.newOutputStream(outputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+            if (inputStream.available() > plugin.getSettings().maxFileSize) {
+                sendReply(servletResponse, 400, "Invalid schematic; too large. (Max size: " + (plugin.getSettings().maxFileSize / 1000) + "KB)");
+                return;
+            }
             IO.copy(inputStream, outputStream);
         }
 

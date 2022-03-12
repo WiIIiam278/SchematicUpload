@@ -13,6 +13,7 @@ public class Settings {
     public final int webServerPort;
     public final String webServerUrl;
 
+    public final int maxFileSize;
     public final long uploadLimitPeriod;
     public final int uploadLimitCount;
 
@@ -29,6 +30,7 @@ public class Settings {
         this.webServerPort = config.getInt("web_server.port", 2780);
         this.webServerUrl = config.getString("web_server.url", "").isBlank() ? "http://localhost:" + webServerPort : config.getString("web_server.url");
 
+        this.maxFileSize = config.getInt("upload_limit.max_schematic_file_size", 1500000);
         this.uploadLimitPeriod = config.getLong("upload_limit.period_minutes", 60L);
         this.uploadLimitCount = config.getInt("upload_limit.schematics_per_period", 3);
     }

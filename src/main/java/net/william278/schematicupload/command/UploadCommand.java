@@ -2,7 +2,6 @@ package net.william278.schematicupload.command;
 
 import de.themoep.minedown.MineDown;
 import net.william278.schematicupload.SchematicUpload;
-import net.william278.schematicupload.config.Settings;
 import net.william278.schematicupload.upload.UploadCode;
 import net.william278.schematicupload.upload.UploadManager;
 import net.william278.schematicupload.util.MessageManager;

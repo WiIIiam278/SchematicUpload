@@ -20,7 +20,7 @@ window.onload = () => {
         }
 
         if (!isFileValid()) {
-            showMessage('Please select a valid file (Max size: 2MB)', 'red');
+            showMessage('Please select a valid file', 'red');
             return;
         }
 
@@ -76,6 +76,6 @@ const isFileValid = () => {
         return false;
     }
 
-    /* Only accept files <= 2mb todo add option for this */
-    return fileUpload.files[0].size <= 2000000;
+    /* Hard schematic size limit of 5mb for safety */
+    return fileUpload.files[0].size <= 5000000;
 };

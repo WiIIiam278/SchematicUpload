@@ -33,7 +33,6 @@ dependencies {
     implementation 'org.eclipse.jetty:jetty-servlet:11.0.8'
 
     implementation 'de.themoep:minedown:1.7.1-SNAPSHOT'
-    implementation 'org.json:json:20211205'
 }
 
 jar.dependsOn shadowJar
