@@ -1,4 +1,4 @@
-[![HuskSync Banner](images/banner-graphic.png)](https://github.com/WiIIiam278/HuskSync)
+[![HuskSync Banner](images/banner-graphic.png)](https://github.com/WiIIiam278/SchematicUpload)
 
 # SchematicUpload
 
