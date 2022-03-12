@@ -25,3 +25,14 @@ be checked and uploaded to the schematics' folder in-game.
 
 ![Screenshot of the in-game command](images/in-game-command.png)
 ![Screenshot of the web interface](images/web-interface.png)
+
+## Commands
+
+SchematicUpload provides the following commands. By default, only operators are permitted to use the schematic uploader.
+You'll need a permission plugin such as LuckPerms to let non-operators use these.
+
+| Command                   | Description                                       | Permission                       |
+|---------------------------|---------------------------------------------------|----------------------------------|
+| `/uploadschematic`        | Upload a schematic file through the web interface | `schematicupload.command`        |
+| `/uploadschematic about`  | View plugin information                           | `schematicupload.command.about`  |
+| `/uploadschematic reload` | Reload config and message files                   | `schematicupload.command.reload` |
