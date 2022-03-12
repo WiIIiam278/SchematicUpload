@@ -83,7 +83,7 @@ public class WebServer {
 
     // Create a new WebServer and start it on the port
     public static WebServer start() {
-        return new WebServer(2780);
+        return new WebServer(plugin.getSettings().webServerPort);
     }
 
     // Gracefully close the internal webserver
