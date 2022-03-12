@@ -51,3 +51,8 @@ This plugin uses bStats to provide me with metrics about its usage. You can turn
 to `plugins/bStats/config.yml` and editing the config to disable plugin metrics.
 
 View bStats metrics: [Click to View](https://bstats.org/plugin/bukkit/SchematicUpload/14611)
+
+### Support
+
+* Report bugs: [Click here](https://github.com/WiIIiam278/SchematicUpload/issues)
+* Discord support: Join the [HuskHelp Discord](https://discord.gg/tVYhJfyDWG)!
