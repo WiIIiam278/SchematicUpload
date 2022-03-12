@@ -7,6 +7,9 @@ website: 'https://william278.net'
 softdepend:
   - WorldEdit
   - FastAsyncWorldEdit
+libraries:
+  - 'org.eclipse.jetty:jetty-server:${jettyServerVer}'
+  - 'org.eclipse.jetty:jetty-servlet:${jettyServletVer}'
 
 commands:
   uploadschematic:

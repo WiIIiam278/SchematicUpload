@@ -4,7 +4,10 @@ plugins {
 }
 
 group = 'net.william278'
-version = '0.1'
+version = '1.0'
+
+var jettyServerVersion = '11.0.8'
+var jettyServletVersion = '11.0.8'
 
 repositories {
     mavenCentral()
@@ -26,11 +29,24 @@ repositories {
     }
 }
 
+shadowJar {
+    relocate 'de.themoep', 'net.william278.schematicupload.libraries'
+    relocate 'org.bstats', 'net.william278.schematicupload.libraries.bstats'
+    relocate 'org.apache', 'net.william278.schematicupload.libraries'
+
+    dependencies {
+        //noinspection GroovyAssignabilityCheck
+        exclude dependency(':slf4j-api')
+    }
+}
+
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
 
-    implementation 'org.eclipse.jetty:jetty-server:11.0.8'
-    implementation 'org.eclipse.jetty:jetty-servlet:11.0.8'
+    // These versions MUST match the ones in plugin.yml
+    compileOnly 'org.eclipse.jetty:jetty-server:' + jettyServerVersion
+    compileOnly 'org.eclipse.jetty:jetty-servlet:' + jettyServletVersion
+
     implementation 'org.bstats:bstats-bukkit:3.0.0'
     implementation 'de.themoep:minedown:1.7.1-SNAPSHOT'
 }
@@ -54,7 +70,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 processResources {
-    def props = [version: version]
+    def props = [version: version, jettyServerVer: jettyServerVersion, jettyServletVer: jettyServletVersion]
     inputs.properties props
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
