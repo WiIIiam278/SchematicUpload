@@ -97,3 +97,8 @@ a {
 a:hover {
     color: var(--accent-color);
 }
+
+#schematic-command:hover {
+    filter: brightness(70%);
+    cursor: pointer;
+}

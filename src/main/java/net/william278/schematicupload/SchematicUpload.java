@@ -58,6 +58,8 @@ public class SchematicUpload extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        webServer.end();
+        if (webServer != null) {
+            webServer.end();
+        }
     }
 }

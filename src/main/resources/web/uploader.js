@@ -42,10 +42,12 @@ function postForm() {
         let jsonResponse = JSON.parse(this.responseText);
         let message = jsonResponse.message;
         if (this.status === 200) {
-            let successMessage = '<b>Successfully uploaded file</b><br/>\n' +
-                'Use the following command in-game to use your schematic<br/>\n' +
-                '<code>//schem load ' + message + '</code>'
+            let command = '//schem load ' + message;
+            let successMessage = '<b>Successfully uploaded schematic</b><br/>\n' +
+                'Use the following command in-game to copy the schematic to your WorldEdit clipboard:<br/>\n' +
+                '<code id="schematic-command" onclick="copyCommand()">' + command + '</code> <span id="copied-confirmation"></span>'
             showMessage(successMessage, 'var(--accent-color)')
+            document.getElementById('copy-area').value = command;
         } else {
             showMessage(message, 'red')
         }
@@ -53,7 +55,7 @@ function postForm() {
 
     xhr.open(form.method, form.action);
     xhr.send(data);
-    showMessage("Uploading...", 'rgb(245, 245, 245)')
+    showMessage("Uploading...", 'var(--main-white)')
 }
 
 const isCodeValid = () => {
@@ -79,3 +81,17 @@ const isFileValid = () => {
     /* Hard schematic size limit of 5mb for safety */
     return fileUpload.files[0].size <= 5000000;
 };
+
+function copyCommand() {
+    /* Get the text field */
+    let commandElement = document.getElementById('copy-area');
+
+    /* Select the text field */
+    commandElement.select();
+    commandElement.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(commandElement.value).then((text) => {
+        document.getElementById('copied-confirmation').innerHTML = '(Copied!)';
+    });
+}

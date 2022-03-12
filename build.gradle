@@ -32,7 +32,6 @@ repositories {
 shadowJar {
     relocate 'de.themoep', 'net.william278.schematicupload.libraries'
     relocate 'org.bstats', 'net.william278.schematicupload.libraries.bstats'
-    relocate 'org.apache', 'net.william278.schematicupload.libraries'
 
     dependencies {
         //noinspection GroovyAssignabilityCheck
