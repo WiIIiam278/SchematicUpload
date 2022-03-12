@@ -31,7 +31,7 @@ dependencies {
 
     implementation 'org.eclipse.jetty:jetty-server:11.0.8'
     implementation 'org.eclipse.jetty:jetty-servlet:11.0.8'
-
+    implementation 'org.bstats:bstats-bukkit:3.0.0'
     implementation 'de.themoep:minedown:1.7.1-SNAPSHOT'
 }
 

@@ -18,8 +18,6 @@ public class WebServer {
 
     private static final SchematicUpload plugin = SchematicUpload.getInstance();
 
-    private static final Path pluginDirectory = new File(Bukkit.getWorldContainer() + File.separator + "plugins" + File.separator + "FastAsyncWorldEdit" + File.separator + "schematics").toPath();
-
     private Server jettyServer;
     private final int port;
 
@@ -53,7 +51,7 @@ public class WebServer {
             }
 
             // Multipart Upload configuration
-            Path multipartTmpDir = new File(pluginDirectory.toFile(), ".temp").toPath();
+            Path multipartTmpDir = new File(plugin.getSettings().schematicDirectory.toFile(), ".temp").toPath();
             if (multipartTmpDir.toFile().mkdirs()) {
                 plugin.getLogger().log(Level.INFO, "Preparing for upload...");
             }
@@ -65,7 +63,7 @@ public class WebServer {
             final int fileSizeThreshold = 64; // 64 bytes
 
             MultipartConfigElement multipartConfig = new MultipartConfigElement(location, maxFileSize, maxRequestSize, fileSizeThreshold);
-            FileUploadServlet saveUploadServlet = new FileUploadServlet(pluginDirectory);
+            FileUploadServlet saveUploadServlet = new FileUploadServlet(plugin.getSettings().schematicDirectory);
             ServletHolder servletHolder = new ServletHolder(saveUploadServlet);
             servletHolder.getRegistration().setMultipartConfig(multipartConfig);
             contextHandler.addServlet(servletHolder, "/api");
