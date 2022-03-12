@@ -61,7 +61,7 @@ public class FileUploadServlet extends HttpServlet {
 
         // Process and validate the file
         Part filePart = servletRequest.getPart("file-upload");
-        String fileName = filePart.getSubmittedFileName();
+        final String fileName = code + "-" + filePart.getSubmittedFileName();
         if (StringUtil.isBlank(fileName)) {
             sendReply(servletResponse, 400, "Invalid file name (empty)");
             return;
