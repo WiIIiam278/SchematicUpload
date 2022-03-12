@@ -36,3 +36,18 @@ You'll need a permission plugin such as LuckPerms to let non-operators use these
 | `/uploadschematic`        | Upload a schematic file through the web interface | `schematicupload.command`        |
 | `/uploadschematic about`  | View plugin information                           | `schematicupload.command.about`  |
 | `/uploadschematic reload` | Reload config and message files                   | `schematicupload.command.reload` |
+
+## Setup
+
+1. Download the SchematicUpload jar and place it in your `/plugins/` directory
+2. Start the server. The web server will be hosted on port 2780 by default. If you're running the server on your
+   computer, you can visit `https://localhost:2780` to view the interface.
+3. Turn off the server, navigate to `/plugins/SchematicUpload` and modify the contents of `config.yml` and
+   `messages_xx-xx.yml` as appropriate. Make sure to change `url` to be the IP address or domain of your server.
+
+### bStats
+
+This plugin uses bStats to provide me with metrics about its usage. You can turn this off by navigating
+to `plugins/bStats/config.yml` and editing the config to disable plugin metrics.
+
+View bStats metrics: [Click to View](https://bstats.org/plugin/bukkit/SchematicUpload/14611)

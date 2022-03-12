@@ -89,6 +89,7 @@ public class FileUploadServlet extends HttpServlet {
 
         // Send confirmation back to the site and to the user if they are in-game still
         consumptionResult.user().ifPresent(user -> {
+            UploadManager.markAsUploaded(user); // Mark them as uploaded to rate limit
             Player player = Bukkit.getServer().getPlayer(user);
             if (player != null) {
                 MessageManager.sendMessage(player, "schematic_upload_complete", "//schem load " + fileName);

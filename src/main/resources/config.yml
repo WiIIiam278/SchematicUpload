@@ -9,6 +9,6 @@ web_server:
   port: 2780
   url: ''
 upload_limits:
-  max_schematic_file_size: 2
+  max_schematic_file_size: 1500000
   period_minutes: 60
   schematics_per_period: 3
