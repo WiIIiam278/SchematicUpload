@@ -3,6 +3,7 @@ version: '${version}'
 main: net.william278.schematicupload.SchematicUpload
 api-version: 1.16
 description: Plugin that provides a web server interface for uploading WorldEdit schematics
+website: 'https://william278.net'
 commands:
   uploadschematic:
     usage: /uploadschematic [reload/about]
@@ -10,7 +11,7 @@ commands:
     aliases: [uploadschem, upschem, uschem]
 
 permissions:
-  schematicupload.command.uploadschematic:
+  schematicupload.command:
     description: Lets you upload schematics
     default: op
   schematicupload.command.reload:

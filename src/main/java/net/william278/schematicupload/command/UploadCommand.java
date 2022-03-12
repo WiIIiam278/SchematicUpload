@@ -33,8 +33,18 @@ public class UploadCommand implements CommandExecutor, TabExecutor {
         if (sender instanceof Player player) {
             if (args.length == 1) {
                 switch (args[0].toLowerCase()) {
-                    case "about" -> player.spigot().sendMessage(new MineDown(PLUGIN_INFORMATION.toString()).toComponent());
+                    case "about" -> {
+                        if (!player.hasPermission("schematicupload.command.about")) {
+                            MessageManager.sendMessage(player, "error_no_permission");
+                            return true;
+                        }
+                        player.spigot().sendMessage(new MineDown(PLUGIN_INFORMATION.toString()).toComponent());
+                    }
                     case "reload" -> {
+                        if (!player.hasPermission("schematicupload.command.reload")) {
+                            MessageManager.sendMessage(player, "error_no_permission");
+                            return true;
+                        }
                         plugin.loadSettings();
                         MessageManager.loadMessages(plugin.getSettings().language);
                         sender.spigot().sendMessage(new MineDown("[SchematicUpload](#00fb9a bold) &#00fb9a&| Reloaded config & message files.").toComponent());
@@ -42,6 +52,10 @@ public class UploadCommand implements CommandExecutor, TabExecutor {
                     default -> MessageManager.sendMessage(player, "error_invalid_syntax", command.getUsage());
                 }
             } else {
+                if (!player.hasPermission("schematicupload.command")) {
+                    MessageManager.sendMessage(player, "error_no_permission");
+                    return true;
+                }
                 final UploadCode code = UploadManager.addCode(player.getUniqueId());
                 MessageManager.sendMessage(player, "schematic_upload_prompt",
                         plugin.getSettings().webServerUrl + "?upload_code=" + code.getCode(),
@@ -55,7 +69,7 @@ public class UploadCommand implements CommandExecutor, TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         final Player player = (Player) sender;
-        if (!player.hasPermission("schematicupload.command.uploadschematic")) {
+        if (!player.hasPermission("schematicupload.command")) {
             return Collections.emptyList();
         }
         if (args.length == 1) {
