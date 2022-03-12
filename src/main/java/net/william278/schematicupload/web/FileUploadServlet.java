@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import net.william278.schematicupload.SchematicUpload;
 import net.william278.schematicupload.upload.UploadManager;
+import net.william278.schematicupload.util.GZipUtil;
 import net.william278.schematicupload.util.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -71,7 +72,7 @@ public class FileUploadServlet extends HttpServlet {
             return;
         }
         if (!(fileName.endsWith(".schem") || fileName.endsWith(".schematic"))) {
-            sendReply(servletResponse, 400, "Invalid file type");
+            sendReply(servletResponse, 400, "Invalid file type extension");
             return;
         }
 
@@ -82,6 +83,10 @@ public class FileUploadServlet extends HttpServlet {
              OutputStream outputStream = Files.newOutputStream(outputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             if (inputStream.available() > plugin.getSettings().maxFileSize) {
                 sendReply(servletResponse, 400, "Invalid schematic; too large. (Max size: " + (plugin.getSettings().maxFileSize / 1000) + "KB)");
+                return;
+            }
+            if (!GZipUtil.isGZipped(inputStream)) {
+                sendReply(servletResponse, 400, "Invalid schematic format.");
                 return;
             }
             IO.copy(inputStream, outputStream);

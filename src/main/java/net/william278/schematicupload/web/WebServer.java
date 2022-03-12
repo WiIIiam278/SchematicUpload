@@ -29,6 +29,7 @@ public class WebServer {
             final int idleTimeout = 120;
             QueuedThreadPool threadPool = new QueuedThreadPool(maxThreads, minThreads, idleTimeout);
 
+            plugin.getLogger().log(Level.INFO, "Starting the internal webserver on port " + port);
             jettyServer = new Server(threadPool);
             ServerConnector connector = new ServerConnector(jettyServer);
             connector.setPort(port);
@@ -72,8 +73,6 @@ public class WebServer {
             jettyServer.setHandler(contextHandler);
             jettyServer.start();
             jettyServer.join();
-
-            plugin.getLogger().log(Level.INFO, "Successfully started the internal webserver on port " + port + ".");
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Failed to start the internal webserver.", e);
         }
