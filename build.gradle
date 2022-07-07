@@ -4,10 +4,10 @@ plugins {
 }
 
 group = 'net.william278'
-version = '1.0'
+version = '1.0.1'
 
-var jettyServerVersion = '11.0.8'
-var jettyServletVersion = '11.0.8'
+var jettyServerVersion = '11.0.10'
+var jettyServletVersion = '11.0.10'
 
 repositories {
     mavenCentral()
