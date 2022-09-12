@@ -52,9 +52,19 @@ footer {
 
 #preview-panel {
     flex: 1;
+    display: flex;
+    justify-content: center;
     min-width: 350px;
     max-width: 350px;
     max-height: 350px;
+}
+
+#preview-icon {
+    max-width: 8em;
+    max-height: 8em;
+    align-self: center;
+    justify-self: center;
+    filter: brightness(50%);
 }
 
 #form-inputs {

@@ -46,9 +46,14 @@
                         <script type="module">
                             import renderSchematic from './preview/src/webschematics.js';
                             document.getElementById("file-upload").addEventListener("change", (event) => {
+                                // If the file is a .schem file, render it in the preview
                                 const file = event.target.files[0];
-                                renderSchematic(file, document.getElementById("preview-panel"),
-                                'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19.2');
+                                if (file.name.endsWith(".schem")) {
+                                    // Remove the preview-icon
+                                    document.getElementById("preview-icon").remove();
+                                    renderSchematic(file, document.getElementById("preview-panel"),
+                                        'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19.2');
+                                }
                             });
                         </script>
                     </div>
@@ -62,7 +67,9 @@
             </form>
             <p id="message"></p>
             <input type="text" value="" id="copy-area" style="display: none" disabled/></div>
-        <div id="preview-panel"></div>
+        <div id="preview-panel">
+            <img id="preview-icon" src="./icons/icon-transparent.png" alt="SchematicUpload"/>
+        </div>
     </div>
 </main>
 <footer>
