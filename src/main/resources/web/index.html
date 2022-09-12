@@ -18,7 +18,8 @@
     <meta name="og:site_name" content="SchematicUpload - Upload and import Minecraft schematics">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,300,regular,500,600,700,800,900,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Nunito:200,300,regular,500,600,700,800,900,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&amp;display=swap">
     <link rel="stylesheet" href="style.css"/>
 
@@ -45,6 +46,7 @@
                         <input required id="file-upload" name="file-upload" type="file" accept=".schem,.schematic"/>
                         <script type="module">
                             import renderSchematic from './preview/src/webschematics.js';
+
                             document.getElementById("file-upload").addEventListener("change", (event) => {
                                 // If the file is a .schem file, render it in the preview
                                 const file = event.target.files[0];
