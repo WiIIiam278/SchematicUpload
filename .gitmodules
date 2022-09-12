@@ -1,0 +1,3 @@
+[submodule "src/main/resources/web/schematics"]
+	path = src/main/resources/web/schematics
+	url = https://github.com/WiIIiam278/WebSchematics.git
