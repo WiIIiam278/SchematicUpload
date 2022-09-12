@@ -44,7 +44,7 @@
                         <label for="file-upload">Choose file:</label>
                         <input required id="file-upload" name="file-upload" type="file" accept=".schem,.schematic"/>
                         <script type="module">
-                            import renderSchematic from './schematics/src/webschematics.js';
+                            import renderSchematic from './preview/src/webschematics.js';
                             document.getElementById("file-upload").addEventListener("change", (event) => {
                                 const file = event.target.files[0];
                                 renderSchematic(file, document.getElementById("preview-panel"),
