@@ -39,6 +39,10 @@ function postForm() {
     let xhr = new XMLHttpRequest();
 
     xhr.onload = function () {
+        if (this.status === 404 || this.status === 500) {
+            showMessage('Server error', 'red');
+            return;
+        }
         let jsonResponse = JSON.parse(this.responseText);
         let message = jsonResponse.message;
         if (this.status === 200) {
@@ -91,7 +95,7 @@ function copyCommand() {
     commandElement.setSelectionRange(0, 99999); /* For mobile devices */
 
     /* Copy the text inside the text field */
-    navigator.clipboard.writeText(commandElement.value).then((text) => {
+    navigator.clipboard.writeText(commandElement.value).then(() => {
         document.getElementById('copied-confirmation').innerHTML = '(Copied!)';
     });
 }
