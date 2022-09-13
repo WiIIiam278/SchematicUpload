@@ -37,40 +37,45 @@
 <main>
     <h1 id="title">Upload Schematic</h1>
     <div id="menu-box">
-        <div id="form-panel">
-            <p id="instructions">Upload schematic files to the Minecraft server.</p>
-            <form id="upload-form" action="/api" enctype="multipart/form-data" method="post">
-                <div id="form-inputs">
-                    <div class="input-row">
-                        <label for="file-upload">Choose file:</label>
-                        <input required id="file-upload" name="file-upload" type="file" accept=".schem,.schematic"/>
-                        <script type="module">
-                            import renderSchematic from './preview/src/webschematics.js';
+        <div id="box-content">
+            <div id="form-panel">
+                <form id="upload-form" action="/api" enctype="multipart/form-data" method="post">
+                    <p id="instructions">Upload schematic files to the Minecraft server.</p>
+                    <div id="form-inputs">
+                        <div class="input-row">
+                            <label for="file-upload">Choose file:</label>
+                            <input required id="file-upload" name="file-upload" type="file" accept=".schem,.schematic"/>
+                            <script type="module">
+                                import renderSchematic from './preview/src/webschematics.js';
 
-                            document.getElementById("file-upload").addEventListener("change", (event) => {
-                                // If the file is a .schem file, render it in the preview
-                                const file = event.target.files[0];
-                                if (file.name.endsWith(".schem")) {
-                                    // Remove the preview-icon
-                                    document.getElementById("preview-icon").remove();
-                                    renderSchematic(file, document.getElementById("preview-panel"),
-                                        'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19.2');
-                                }
-                            });
-                        </script>
+                                document.getElementById("file-upload").addEventListener("change", (event) => {
+                                    // If the file is a .schem file, render it in the preview
+                                    const file = event.target.files[0];
+                                    if (file.name.endsWith(".schem")) {
+                                        // Remove the preview-icon
+                                        document.getElementById("preview-icon").remove();
+                                        renderSchematic(file, document.getElementById("preview-panel"),
+                                            'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19.2');
+                                    }
+                                });
+                            </script>
+                        </div>
+                        <div class="input-row">
+                            <label for="input-code">Code:</label>
+                            <input required id="input-code" name="input-code" type="text"/>
+                        </div>
                     </div>
-                    <div class="input-row">
-                        <label for="input-code">Code:</label>
-                        <input required id="input-code" name="input-code" type="text"/>
-                    </div>
+                    <p>Accepted formats: <code>.schem</code>, <code>.schematic</code></p>
+                    <input type="submit" value="Upload" id="upload-button"/>
+                </form>
+                <div id="preview-panel">
+                    <img id="preview-icon" src="./icons/icon-transparent.png" alt="SchematicUpload"/>
                 </div>
-                <p>Accepted formats: <code>.schem</code>, <code>.schematic</code></p>
-                <input type="submit" value="Upload" id="upload-button"/>
-            </form>
-            <p id="message"></p>
-            <input type="text" value="" id="copy-area" style="display: none" disabled/></div>
-        <div id="preview-panel">
-            <img id="preview-icon" src="./icons/icon-transparent.png" alt="SchematicUpload"/>
+            </div>
+        </div>
+        <div id="box-footer">
+            <span id="message"></span>
+            <input type="text" value="" id="copy-area" style="display: none" disabled/>
         </div>
     </div>
 </main>

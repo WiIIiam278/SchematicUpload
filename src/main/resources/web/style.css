@@ -40,14 +40,24 @@ footer {
     border-radius: 0.5em;
     background-color: var(--main-gray);
     display: flex;
+    flex-direction: column;
+    max-width: 730px;
+}
+
+#box-content {
+    display: flex;
     flex-direction: row;
+}
+
+#box-footer {
+    padding: 1.5em;
 }
 
 #form-panel {
     flex: 1;
     padding: 1.5em;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 #preview-panel {
