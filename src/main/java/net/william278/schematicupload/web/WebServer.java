@@ -82,6 +82,16 @@ public class WebServer {
                     return;
                 }
                 copyWebFiles("/web", Paths.get(targetDir.getPath()));
+
+                // Create a file in the /web folder with the current version
+                final File versionFile = new File(targetDir, "version.txt");
+                if (!versionFile.exists()) {
+                    if (!versionFile.createNewFile()) {
+                        plugin.getLogger().log(Level.SEVERE, "Failed to create version file");
+                        return;
+                    }
+                }
+                Files.write(versionFile.toPath(), plugin.getDescription().getVersion().getBytes());
             }
 
             // Create resource handler to handle requests
