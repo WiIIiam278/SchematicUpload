@@ -2,7 +2,7 @@ name: SchematicUpload
 version: '${version}'
 main: net.william278.schematicupload.SchematicUpload
 api-version: 1.16
-description: Plugin that provides a web server interface for uploading WorldEdit schematics
+description: Provide a web server interface for uploading schematics to your server
 website: 'https://william278.net'
 softdepend:
   - WorldEdit
