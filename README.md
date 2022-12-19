@@ -1,5 +1,5 @@
 # [![SchematicUpload Banner](images/banner-graphic.png)](https://github.com/WiIIiam278/SchematicUpload)
-[![GitHub CI](https://img.shields.io/github/workflow/status/WiIIiam278/SchematicUpload/Java%20CI?logo=github)](https://github.com/WiIIiam278/SchematicUpload/actions/workflows/java_ci.yml)
+[![GitHub CI](https://img.shields.io/github/actions/workflow/status/WiIIiam278/SchematicUpload/java_ci.yml?branch=master&logo=github)](https://github.com/WiIIiam278/SchematicUpload/actions/workflows/java_ci.yml)
 [![Support Discord](https://img.shields.io/discord/818135932103557162.svg?label=&logo=discord&logoColor=fff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/tVYhJfyDWG)
 
 **SchematicUpload** is a plugin that lets players upload schematics to your server through a simple and safe web panel. If you've ever run a build or creative server and have had to respond to annoying requests to import a player's schematic, this is the plugin for you.
