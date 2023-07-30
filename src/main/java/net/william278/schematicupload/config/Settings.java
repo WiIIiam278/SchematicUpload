@@ -25,10 +25,10 @@ public class Settings {
 
     public Settings() {
         plugin.saveDefaultConfig();
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveConfig();
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
+        plugin.getConfig().options().copyDefaults(true);
+        plugin.saveConfig();
 
         this.language = config.getString("language", "en-gb");
         this.schematicDirectory = getSchematicDirectory();
