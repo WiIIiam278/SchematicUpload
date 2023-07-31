@@ -1,7 +1,12 @@
 package net.william278.schematicupload.upload;
 
 import net.william278.schematicupload.SchematicUpload;
+import org.bukkit.Bukkit;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -79,10 +84,25 @@ public class UploadManager {
     public static UploadCode addCode(UUID player) {
         UploadCode code = UploadCode.generateRandomCode();
         uploadAuthorizationCodes.put(player, code);
+        logToFile("Schematic code " + code.getCode() + " generated for " + player);
         return code;
     }
 
     public record ConsumptionResult(boolean consumed, Optional<UUID> user, String errorCode) {
     }
 
+    public static void logToFile(String message) {
+        File logFile = new File(SchematicUpload.getInstance().getDataFolder(), "schems.log");
+
+        try (FileWriter fw = new FileWriter(logFile,true);
+             PrintWriter pw = new PrintWriter(fw);) {
+            if (!logFile.exists()) {
+                logFile.createNewFile();
+            }
+            pw.println(message);
+        }
+        catch (IOException e) {
+            Bukkit.getLogger().warning(e.toString());
+        }
+    }
 }
