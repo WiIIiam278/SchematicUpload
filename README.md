@@ -74,7 +74,7 @@ Translations of the plugin locales are welcome to help make the plugin more acce
 - [English Locales](https://github.com/WiIIiam278/SchematicUpload/tree/master/src/main/resources/locales/en-gb.yml)
 
 ## Links
-- [Modrinth](https://modrinth.com/plugin/schematicupload) &mdash; View the plugin Modrinth page (Also: [Spigot](https://www.spigotmc.org/resources/schematicupload.100657/), [Polymart](https://polymart.org/resource/schematicupload.2125), & [Hangar](https://hangar.papermc.io/William278/SchematicUpload))
+- [Spigot](https://www.spigotmc.org/resources/schematicupload.100657/) &mdash; View the plugin Modrinth page (Also: [Modrinth](https://modrinth.com/plugin/schematicupload), [Polymart](https://polymart.org/resource/schematicupload.2125), & [Hangar](https://hangar.papermc.io/William278/SchematicUpload))
 - [Issues](https://github.com/WiIIiam278/SchematicUpload/issues) &mdash; File a bug report or feature request
 - [Discord](https://discord.gg/tVYhJfyDWG) &mdash; Get help, ask questions
 - [bStats](https://bstats.org/plugin/bukkit/SchematicUpload/14611) &mdash; View plugin metrics
