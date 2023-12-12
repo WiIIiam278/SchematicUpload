@@ -51,12 +51,12 @@ public class WebServer {
 
     private WebServer(@NotNull SchematicUpload plugin) {
         this.plugin = plugin;
-        this.port = plugin.getSettings().getWebServerSettings().getPort();
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             final int maxThreads = 32;
             final int minThreads = 8;
             final int idleTimeout = 120;
+            final int port = plugin.getSettings().getWebServerSettings().getPort();
             final QueuedThreadPool threadPool = new QueuedThreadPool(maxThreads, minThreads, idleTimeout);
 
             plugin.log(Level.INFO, "Starting the internal webserver on port " + port);
@@ -126,7 +126,7 @@ public class WebServer {
             staticHandler.setHandler(resourceHandler);
 
             // Create multipart upload handler directory
-            final Path uploadTempDirectory = new File(plugin.getSettings().schematicDirectory.toFile(), ".temp").toPath();
+            final Path uploadTempDirectory = plugin.getSchematicDirectory().resolve(".temp");
             if (uploadTempDirectory.toFile().mkdirs()) {
                 plugin.getLogger().log(Level.INFO, "Prepared temporary upload folder for the webserver...");
             }
@@ -139,7 +139,7 @@ public class WebServer {
             // Create multipart upload handler
             final MultipartConfigElement multipartConfig = new MultipartConfigElement(uploadTempDirectory.toString(),
                     maxFileSize, maxRequestSize, fileSizeThreshold);
-            final FileUploadServlet saveUploadServlet = new FileUploadServlet(plugin.getSettings().schematicDirectory);
+            final FileUploadServlet saveUploadServlet = new FileUploadServlet(plugin);
             final ServletHolder servletHolder = new ServletHolder(saveUploadServlet);
             servletHolder.getRegistration().setMultipartConfig(multipartConfig);
 
