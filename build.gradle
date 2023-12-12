@@ -4,6 +4,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'org.cadixdev.licenser' version '0.6.1'
     id 'org.ajoberstar.grgit' version '5.2.1'
+    id 'xyz.jpenilla.run-paper' version '2.2.2'
     id 'maven-publish'
     id 'java'
 }
@@ -12,6 +13,12 @@ group 'net.william278'
 version "$ext.plugin_version${versionMetadata()}"
 description "$ext.plugin_description"
 defaultTasks 'licenseFormat', 'build'
+
+tasks {
+    runServer {
+        minecraftVersion('1.20.4')
+    }
+}
 
 ext {
     set 'version', version.toString()
