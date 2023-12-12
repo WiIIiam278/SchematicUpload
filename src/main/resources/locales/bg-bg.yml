@@ -1,0 +1,6 @@
+locales:
+  error_no_permission: '[Грешка:](#ff3300) [Нямате право да използвате тази команда.](#ff7e5e)'
+  error_invalid_syntax: '[Грешка:](#ff3300) [Неправилен синтаксис. Използвайте:](#ff7e5e) [%1%](#ff7e5e suggest_command=%1%)'
+  schematic_upload_prompt: '[Качи Схематика](#00fb9a bold)\n[•](white) [[Натиснете тук],](#00fb9a open_url=%1% show_text=&#00fb9a&Натиснете тук, за да отворите в Браузър) [за да качите Вашата схематика](gray)\n[•](white) [Или пък, посетете](gray) [%2%](gray open_url=%2% show_text=&7Натиснете, за да отворите в Браузър) [и въведете този код:](gray) [%3%](#00fb9a show_text=&#00fb9a&Натиснете, за да поставите в чата suggest_command=%3%)'
+  schematic_upload_complete: '[Схематиката Качена](#00fb9a bold)\n[•](white) [Вашата схематика е била качена успешно.](gray)\n[•](white) [За да я копирате в клипборда на Вашият WorldEdit, напишете:](gray)\n[%1%](#00fb9a show_text=&#00fb9a&Натиснете, за да Ви предложим командата suggest_command=%1%)'
+  config_reloaded: '[SchematicUpload](#00fb9a bold) [| Reloaded config & locale files.](#00fb9a)'

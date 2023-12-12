@@ -1,0 +1,6 @@
+locales:
+  error_no_permission: '[Error:](#ff3300) [You do not have permission to execute that command.](#ff7e5e)'
+  error_invalid_syntax: '[Error:](#ff3300) [Invalid syntax. Usage:](#ff7e5e) [%1%](#ff7e5e italic suggest_command=%1%)'
+  schematic_upload_prompt: '[Upload Schematic](#00fb9a bold)\n[•](white) [[Click here]](#00fb9a open_url=%1% show_text=&#00fb9a&Click to open in Browser) [to upload your schematic](gray)\n[•](white) [Or, visit](gray) [%2%](gray open_url=%2% show_text=&7Click to open in Browser) [and enter this code:](gray) [%3%](#00fb9a show_text=&#00fb9a&Click to put into chat box suggest_command=%3%)'
+  schematic_upload_complete: '[Schematic Uploaded](#00fb9a bold)\n[•](white) [Your schematic has been successfully uploaded.](gray)\n[•](white) [To copy it to your WorldEdit clipboard, type:](gray)\n[%1%](#00fb9a show_text=&#00fb9a&Click to suggest command suggest_command=%1%)'
+  config_reloaded: '[SchematicUpload](#00fb9a bold) [| Reloaded config & locale files.](#00fb9a)'

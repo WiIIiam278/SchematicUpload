@@ -17,30 +17,27 @@
  *  limitations under the License.
  */
 
-package net.william278.schematicupload.util;
+package net.william278.schematicupload.web;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.zip.GZIPInputStream;
+import net.william278.schematicupload.SchematicUpload;
+import org.jetbrains.annotations.NotNull;
 
-public class GZipUtil {
+public interface WebServerProvider {
 
-    // Used for checking if a file is in the GZip format required by schematics
-    public static boolean isGZipped(InputStream in) {
-        if (!in.markSupported()) {
-            in = new BufferedInputStream(in);
-        }
-        in.mark(2);
-        int magic;
-        try {
-            magic = in.read() & 0xff | ((in.read() << 8) & 0xff00);
-            in.reset();
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-            return false;
-        }
-        return magic == GZIPInputStream.GZIP_MAGIC;
+    WebServer getWebServer();
+
+    void setWebServer(@NotNull WebServer webServer);
+
+    default void loadWebServer() {
+        // Start web server
+        setWebServer(WebServer.createAndStart(getPlugin()));
     }
+
+    default void endWebServer() {
+        getWebServer().end();
+    }
+
+    @NotNull
+    SchematicUpload getPlugin();
 
 }

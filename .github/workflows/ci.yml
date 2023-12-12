@@ -1,0 +1,76 @@
+# Builds, tests the project with Gradle and uploads to Modrinth
+name: CI Tests & Publish
+
+on:
+  push:
+    branches: [ 'master' ]
+    paths-ignore:
+      - 'docs/**'
+      - 'workflows/**'
+      - 'README.md'
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout for CI 🛎️'
+        uses: actions/checkout@v4
+      - name: 'Set up JDK 17 📦'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: 'Build with Gradle 🏗️'
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build test publish
+      - name: 'Publish Test Report 📊'
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure() # Continue on failure
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+      - name: 'Fetch Version Name 📝'
+        run: |
+          echo "::set-output name=VERSION_NAME::$(${{github.workspace}}/gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}')"
+        id: fetch-version
+      - name: Get Version
+        run: |
+          echo "version_name=${{steps.fetch-version.outputs.VERSION_NAME}}" >> $GITHUB_ENV
+      - name: 'Spigot: Publish to Modrinth & Hangar 🚰'
+        uses: WiIIiam278/mc-publish@hangar
+        with:
+          modrinth-id: J6U9o3JG
+          modrinth-featured: false
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-dependencies: |
+            worldedit | suggests | *
+            fastasyncworldedit | suggests | *
+          hangar-id: William278/SchematicUpload
+          hangar-token: ${{ secrets.HANGAR_API_KEY }}
+          hangar-version-type: Alpha
+          files-primary: target/SchematicUpload-*.jar
+          name: SchematicUpload v${{ env.version_name }}
+          version: ${{ env.version_name }}
+          version-type: alpha
+          changelog: ${{ github.event.head_commit.message }}
+          loaders: |
+            spigot
+            paper
+          game-versions: |
+            1.16.5
+            1.17.1
+            1.18.2
+            1.19.4
+            1.20.2
+          java: 17
+      - name: 'Upload GitHub Artifacts 📦'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: SchematicUpload
+          path: |
+            target/SchematicUpload-*.jar

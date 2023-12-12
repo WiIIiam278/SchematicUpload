@@ -1,78 +1,109 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'org.cadixdev.licenser' version '0.6.1'
+    id 'org.ajoberstar.grgit' version '5.2.1'
+    id 'maven-publish'
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-group = 'net.william278'
-version = '1.0.1'
+group 'net.william278'
+version "$ext.plugin_version${versionMetadata()}"
+description "$ext.plugin_description"
+defaultTasks 'licenseFormat', 'build'
 
-var jettyServerVersion = '11.0.10'
-var jettyServletVersion = '11.0.10'
+ext {
+    set 'version', version.toString()
+    set 'description', description.toString()
+    set 'jetty_server_version', jetty_server_version.toString()
+    set 'jetty_servlet_version', jetty_servlet_version.toString()
+}
 
 repositories {
     mavenCentral()
-    maven {
-        name = 'spigotmc-repo'
-        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-    }
-    maven {
-        name = 'spigotmc-repo'
-        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-    }
-    maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
-    }
-    maven {
-        name = 'minebench'
-        url = 'https://repo.minebench.de/'
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://repo.minebench.de/' }
+    maven { url = 'https://jitpack.io/' }
+}
+
+dependencies {
+    implementation 'net.william278:DesertWell:2.0.3'
+    implementation 'org.bstats:bstats-bukkit:3.0.2'
+    implementation 'com.github.Exlll.ConfigLib:configlib-yaml:v4.3.0'
+    implementation 'de.themoep:minedown-adventure:1.7.1-SNAPSHOT'
+    implementation 'net.kyori:adventure-platform-bukkit:4.3.1'
+
+    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    compileOnly "org.eclipse.jetty:jetty-server:${jetty_server_version}"
+    compileOnly "org.eclipse.jetty:jetty-servlet:${jetty_servlet_version}"
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+}
+
+processResources {
+    filesMatching(['**/*.json', '**/*.yml']) {
+        filter ReplaceTokens as Class, beginToken: '${', endToken: '}',
+                tokens: rootProject.ext.properties
     }
 }
 
+license {
+    header = rootProject.file('HEADER')
+    include '**/*.java'
+    newLine = true
+}
+
+logger.lifecycle("Building SchematicUpload ${version} by William278")
+
+version rootProject.version
+archivesBaseName = "${rootProject.name}"
+
+compileJava.options.encoding = 'UTF-8'
+compileJava.options.release.set 17
+javadoc.options.encoding = 'UTF-8'
+javadoc.options.addStringOption('Xdoclint:none', '-quiet')
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 shadowJar {
+    relocate 'net.william278.desertwell', 'net.william278.schematicupload.libraries.desertwell'
+    relocate 'org.jetbrains', 'net.william278.schematicupload.libraries'
+    relocate 'org.intellij', 'net.william278.schematicupload.libraries'
     relocate 'de.themoep', 'net.william278.schematicupload.libraries'
     relocate 'org.bstats', 'net.william278.schematicupload.libraries.bstats'
+    relocate 'net.kyori', 'net.william278.schematicupload.libraries'
+    relocate 'de.exlll', 'net.william278.schematicupload.libraries'
+    relocate 'org.snakeyaml', 'net.william278.schematicupload.libraries.snakeyaml'
 
     dependencies {
         //noinspection GroovyAssignabilityCheck
         exclude dependency(':slf4j-api')
     }
+
+    destinationDirectory.set(file("$rootDir/target"))
+    archiveClassifier.set('')
+
+    minimize()
 }
-
-dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
-
-    // These versions MUST match the ones in plugin.yml
-    compileOnly 'org.eclipse.jetty:jetty-server:' + jettyServerVersion
-    compileOnly 'org.eclipse.jetty:jetty-servlet:' + jettyServletVersion
-
-    implementation 'org.bstats:bstats-bukkit:3.0.0'
-    implementation 'de.themoep:minedown:1.7.1-SNAPSHOT'
-}
-
 jar.dependsOn shadowJar
+clean.delete "$rootDir/target"
 
-def targetJavaVersion = 16
-java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+@SuppressWarnings('GrMethodMayBeStatic')
+def versionMetadata() {
+    // Get if there is a tag for this commit
+    def tag = grgit.tag.list().find { it.commit.id == grgit.head().id }
+    if (tag != null) {
+        return ''
     }
-}
 
-tasks.withType(JavaCompile).configureEach {
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion
+    // Otherwise, get the last commit hash and if it's a clean head
+    if (grgit == null) {
+        return '-' + System.getenv("GITHUB_RUN_NUMBER") ? 'build.' + System.getenv("GITHUB_RUN_NUMBER") : 'unknown'
     }
-}
-
-processResources {
-    def props = [version: version, jettyServerVer: jettyServerVersion, jettyServletVer: jettyServletVersion]
-    inputs.properties props
-    filteringCharset 'UTF-8'
-    filesMatching('plugin.yml') {
-        expand props
-    }
+    return '-' + grgit.head().abbreviatedId + (grgit.status().clean ? '' : '-indev')
 }
