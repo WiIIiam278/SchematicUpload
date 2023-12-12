@@ -123,6 +123,7 @@ public class FileUploadServlet extends HttpServlet {
                 final List<File> converted = Converter.litematicToWorldEdit(
                         outputFile.toFile(), outputFile.toFile().getParentFile()
                 );
+                Files.delete(outputFile);
                 fileName = converted.stream().map(File::getName).collect(Collectors.joining(" "));
             }
         }
