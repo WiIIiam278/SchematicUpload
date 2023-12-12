@@ -43,8 +43,9 @@ public final class Settings {
     @Comment("Whether to automatically check for plugin updates on startup")
     private boolean checkForUpdates = true;
 
-    @Comment("Whether to automatically download and install plugin updates")
-    private String customSchematicDirectory = "";
+    @Comment({"Specify a custom directory where schematics should go.",
+            "If WorldEdit is installed, the WE schematics directory will be used instead of this"})
+    private String customSchematicDirectory = "schematics";
 
     @Comment("Settings for the built-in web server")
     private WebServerSettings webServerSettings = new WebServerSettings();
@@ -53,10 +54,10 @@ public final class Settings {
     @Configuration
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class WebServerSettings {
-        @Comment("URL to use for the web server (e.g. http://localhost)")
+        @Comment("URL to use for the web server (e.g., http://example.com)")
         private String url = "http://localhost";
 
-        @Comment("Port to use for the web server (e.g. 2780)")
+        @Comment("Port to use for the web server (e.g., 8000)")
         private int port = 2780;
     }
 
