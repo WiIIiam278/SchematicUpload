@@ -27,7 +27,6 @@ import net.william278.desertwell.util.Version;
 import net.william278.schematicupload.SchematicUpload;
 import net.william278.schematicupload.upload.UploadCode;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
@@ -39,7 +38,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class UploadCommand implements CommandExecutor, TabExecutor {
+public class UploadCommand implements TabExecutor {
 
     private static final List<String> TAB_COMPLETIONS = List.of("about", "reload");
     private final AboutMenu aboutMenu;
@@ -80,6 +79,19 @@ public class UploadCommand implements CommandExecutor, TabExecutor {
         return true;
     }
 
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
+                                      @NotNull String alias, String[] args) {
+        if (args.length > 1 || !sender.hasPermission("schematicupload.command")) {
+            return List.of();
+        }
+
+        final List<String> completions = Lists.newArrayList();
+        StringUtil.copyPartialMatches(args[0], TAB_COMPLETIONS, completions);
+        Collections.sort(completions);
+        return completions;
+    }
+
     private void generateUploadCode(@NotNull Player player) {
         if (!player.hasPermission("schematicupload.command")) {
             plugin.sendMessage(player, "error_no_permission");
@@ -116,18 +128,5 @@ public class UploadCommand implements CommandExecutor, TabExecutor {
             return;
         }
         plugin.getAudiences().player(player).sendMessage(aboutMenu.toComponent());
-    }
-
-    @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
-                                      @NotNull String alias, String[] args) {
-        if (args.length > 1 || !sender.hasPermission("schematicupload.command")) {
-            return List.of();
-        }
-
-        final List<String> completions = Lists.newArrayList();
-        StringUtil.copyPartialMatches(args[0], completions, TAB_COMPLETIONS);
-        Collections.sort(completions);
-        return completions;
     }
 }

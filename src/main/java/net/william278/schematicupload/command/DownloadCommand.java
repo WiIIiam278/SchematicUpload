@@ -46,6 +46,19 @@ public class DownloadCommand implements TabExecutor {
         return true;
     }
 
+    @Nullable
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
+                                      @NotNull String alias, @NotNull String[] args) {
+        if (args.length > 1 || !sender.hasPermission("schematicupload.command.download")) {
+            return List.of();
+        }
+        final List<String> completions = Lists.newArrayList();
+        StringUtil.copyPartialMatches(args[0], getAvailableFiles(), completions);
+        Collections.sort(completions);
+        return completions;
+    }
+
     private void downloadSchematic(@NotNull Player player, @NotNull String fileName) {
         final Path downloadsFolder = plugin.getConfigDirectory().resolve("web").resolve(DOWNLOAD_DIRECTORY);
         try {
@@ -84,19 +97,6 @@ public class DownloadCommand implements TabExecutor {
             plugin.sendMessage(player, "error_download_failed");
             plugin.log(Level.WARNING, "Failed to copy schematic for downloading", e);
         }
-    }
-
-    @Nullable
-    @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
-                                      @NotNull String alias, @NotNull String[] args) {
-        if (args.length > 1 || !sender.hasPermission("schematicupload.command.download")) {
-            return List.of();
-        }
-        final List<String> completions = Lists.newArrayList();
-        StringUtil.copyPartialMatches(args[0], completions, getAvailableFiles());
-        Collections.sort(completions);
-        return completions;
     }
 
     @NotNull
