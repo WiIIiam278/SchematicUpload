@@ -172,9 +172,7 @@ public class WebServer {
     // Create a new WebServer and start it on the port
     @NotNull
     public static WebServer createAndStart(@NotNull SchematicUpload plugin) {
-        final WebServer server = new WebServer(plugin);
-        server.initialize();
-        return server;
+        return new WebServer(plugin);
     }
 
 }

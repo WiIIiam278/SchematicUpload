@@ -28,8 +28,8 @@ public interface WebServerProvider {
 
     void setWebServer(@NotNull WebServer webServer);
 
+    // Start web server
     default void loadWebServer() {
-        // Start web server
         setWebServer(WebServer.createAndStart(getPlugin()));
     }
 
