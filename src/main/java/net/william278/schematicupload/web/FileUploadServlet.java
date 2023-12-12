@@ -1,3 +1,22 @@
+/*
+ * This file is part of SchematicUpload, licensed under the Apache License 2.0.
+ *
+ *  Copyright (c) William278 <will27528@gmail.com>
+ *  Copyright (c) contributors
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package net.william278.schematicupload.web;
 
 import jakarta.servlet.ServletException;
@@ -5,10 +24,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import net.william278.schematicupload.SchematicUpload;
 import net.william278.schematicupload.upload.UploadManager;
 import net.william278.schematicupload.util.GZipUtil;
-import net.william278.schematicupload.util.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.eclipse.jetty.util.IO;
@@ -22,21 +42,16 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class FileUploadServlet extends HttpServlet {
 
-    private static final SchematicUpload plugin = SchematicUpload.getInstance();
-
-    private final Path targetDirectory;
-
-    public FileUploadServlet(Path targetDirectory) {
-        this.targetDirectory = targetDirectory;
-    }
+    private final SchematicUpload plugin;
 
     @Override
     protected void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         try {
             // Handle the multipart form upload
-            processParts(servletRequest, servletResponse, targetDirectory);
+            processParts(servletRequest, servletResponse, plugin.getSchematicDirectory());
         } catch (IOException | ServletException e) {
             plugin.getLogger().log(Level.SEVERE, "Failed to process upload", e);
             sendReply(servletResponse, 500, "An error occurred on the server");
@@ -54,7 +69,7 @@ public class FileUploadServlet extends HttpServlet {
             }
         }
         final String code = codeBuilder.toString();
-        final UploadManager.ConsumptionResult consumptionResult = UploadManager.consumeCode(code);
+        final UploadManager.ConsumptionResult consumptionResult = plugin.getUploadManager().consumeCode(code);
         if (!consumptionResult.consumed()) {
             sendReply(servletResponse, 403, "Invalid or expired code");
             return;
@@ -80,10 +95,11 @@ public class FileUploadServlet extends HttpServlet {
         String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
         Path outputFile = outputDir.resolve(encodedFileName);
         try (InputStream inputStream = filePart.getInputStream();
-             OutputStream outputStream = Files.newOutputStream(outputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-            if (inputStream.available() > plugin.getSettings().maxFileSize) {
+            OutputStream outputStream = Files.newOutputStream(outputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+            final long maxSize = plugin.getSettings().getLimitSettings().getMaxFileSize();
+            if (inputStream.available() > maxSize) {
                 Files.delete(outputFile);
-                sendReply(servletResponse, 400, "Invalid schematic; too large. (Max size: " + (plugin.getSettings().maxFileSize / 1000) + "KB)");
+                sendReply(servletResponse, 400, "Invalid schematic; too large. (Max size: " + (maxSize / 1024) + "KiB)");
                 return;
             }
             if (!GZipUtil.isGZipped(inputStream)) {
@@ -96,10 +112,11 @@ public class FileUploadServlet extends HttpServlet {
 
         // Send confirmation back to the site and to the user if they are in-game still
         consumptionResult.user().ifPresent(user -> {
-            UploadManager.markAsUploaded(user); // Mark them as uploaded to rate limit
+            plugin.getUploadManager().markAsUploaded(user); // Mark them as uploaded to rate limit
             Player player = Bukkit.getServer().getPlayer(user);
             if (player != null) {
-                MessageManager.sendMessage(player, "schematic_upload_complete", "//schem load " + fileName);
+                plugin.sendMessage(player, "schematic_upload_complete",
+                        String.format("//schem load %s", fileName));
             }
         });
         sendReply(servletResponse, 200, fileName);

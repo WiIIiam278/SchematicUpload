@@ -1,29 +1,29 @@
-name: SchematicUpload
+name: 'SchematicUpload'
 version: '${version}'
-main: net.william278.schematicupload.SchematicUpload
-api-version: 1.16
-description: Provide a web server interface for uploading schematics to your server
+main: 'net.william278.schematicupload.SchematicUpload'
+api-version: '1.16'
+description: '${description}'
 website: 'https://william278.net'
 softdepend:
   - WorldEdit
   - FastAsyncWorldEdit
 libraries:
-  - 'org.eclipse.jetty:jetty-server:${jettyServerVer}'
-  - 'org.eclipse.jetty:jetty-servlet:${jettyServletVer}'
+  - 'org.eclipse.jetty:jetty-server:${jetty_server_version}'
+  - 'org.eclipse.jetty:jetty-servlet:${jetty_servlet_version}'
 
 commands:
   uploadschematic:
-    usage: /uploadschematic [reload/about]
-    description: Upload a schematic
-    aliases: [ schematicupload ]
+    usage: '/uploadschematic [reload/about]'
+    description: 'Upload a schematic'
+    aliases: [ 'uploadschem', 'upschem', 'uschem' ]
 
 permissions:
   schematicupload.command:
-    description: Lets you upload schematics
+    description: 'Lets you upload schematics'
     default: op
   schematicupload.command.reload:
-    description: Lets you reload the plugin
+    description: 'Lets you reload the plugin'
     default: op
   schematicupload.command.about:
-    description: Lets you view plugin information
+    description: 'Lets you view plugin information'
     default: true
