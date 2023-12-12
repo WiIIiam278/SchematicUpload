@@ -31,6 +31,8 @@ schematic, this is the plugin for you.
 
 **⭐ Super easy to configure** &mdash; Simply set a port and hostname!
 
+**⭐ Downloads, too!** &mdash; Let users both download and upload schematics!
+
 **⭐ Less hassle for players** &mdash; No more annoying requests to manually upload schematics!
 
 **⭐ Great admin features** &mdash; Limit how many schematics a player can upload over a given timeframe.
@@ -48,11 +50,12 @@ be checked and uploaded to the schematics' folder in-game.
 SchematicUpload provides the following commands. By default, only operators are permitted to use the schematic uploader.
 You'll need a permission plugin such as LuckPerms to let non-operators use these.
 
-| Command                   | Description                                       | Permission                       |
-|---------------------------|---------------------------------------------------|----------------------------------|
-| `/uploadschematic`        | Upload a schematic file through the web interface | `schematicupload.command`        |
-| `/uploadschematic about`  | View plugin information                           | `schematicupload.command.about`  |
-| `/uploadschematic reload` | Reload config and message files                   | `schematicupload.command.reload` |
+| Command                     | Description                                       | Permission                         |
+|-----------------------------|---------------------------------------------------|------------------------------------|
+| `/uploadschematic`          | Upload a schematic file through the web interface | `schematicupload.command`          |
+| `/uploadschematic about`    | View plugin information                           | `schematicupload.command.about`    |
+| `/uploadschematic reload`   | Reload config and message files                   | `schematicupload.command.reload`   |
+| `/downloadschematic (name)` | Get a download link for a schematic               | `schematicupload.command.download` |
 
 ## Setup
 

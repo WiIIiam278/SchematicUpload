@@ -28,14 +28,23 @@ import java.util.Objects;
 public interface CommandProvider {
 
     default void loadCommand() {
-        // Register command & tab completer
+        // Register upload command
         final UploadCommand uploadCommand = new UploadCommand(getPlugin());
-        final PluginCommand bukkitCommand = Objects.requireNonNull(
-                getPlugin().getCommand("uploadschematic"),
+        final PluginCommand bukkitUpload = Objects.requireNonNull(
+                getPlugin().getCommand("schematicupload"),
                 "Upload command not registered in CommandMap"
         );
-        bukkitCommand.setExecutor(uploadCommand);
-        bukkitCommand.setTabCompleter(uploadCommand);
+        bukkitUpload.setExecutor(uploadCommand);
+        bukkitUpload.setTabCompleter(uploadCommand);
+
+        // Register download command
+        final DownloadCommand downloadCommand = new DownloadCommand(getPlugin());
+        final PluginCommand bukkitDownload = Objects.requireNonNull(
+                getPlugin().getCommand("schematicdownload"),
+                "Download command not registered in CommandMap"
+        );
+        bukkitDownload.setExecutor(downloadCommand);
+        bukkitDownload.setTabCompleter(downloadCommand);
     }
 
     @NotNull

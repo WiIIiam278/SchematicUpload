@@ -12,10 +12,14 @@ libraries:
   - 'org.eclipse.jetty:jetty-servlet:${jetty_servlet_version}'
 
 commands:
-  uploadschematic:
-    usage: '/uploadschematic [reload/about]'
+  schematicupload:
+    usage: '/schematicupload [reload/about]'
     description: 'Upload a schematic'
-    aliases: [ 'uploadschem', 'upschem', 'uschem' ]
+    aliases: [ 'uploadschematic' ]
+  schematicdownload:
+    usage: '/schematicdownload <name>'
+    description: 'Download a schematic'
+    aliases: [ 'downloadschematic' ]
 
 permissions:
   schematicupload.command:
@@ -26,4 +30,7 @@ permissions:
     default: op
   schematicupload.command.about:
     description: 'Lets you view plugin information'
+    default: true
+  schematicupload.command.download:
+    description: 'Lets you download schematics'
     default: true

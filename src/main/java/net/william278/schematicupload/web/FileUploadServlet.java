@@ -46,6 +46,8 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+import static net.william278.schematicupload.SchematicUpload.ALLOWED_EXTENSIONS;
+
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class FileUploadServlet extends HttpServlet {
     private static final List<String> ALLOWED_EXTENSIONS = List.of(".schem", ".schematic", ".litematic");

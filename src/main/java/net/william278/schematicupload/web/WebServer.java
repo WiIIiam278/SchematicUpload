@@ -44,6 +44,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.logging.Level;
 
+import static net.william278.schematicupload.command.DownloadCommand.DOWNLOAD_DIRECTORY;
+
 public class WebServer {
 
     private final SchematicUpload plugin;
@@ -115,6 +117,18 @@ public class WebServer {
                     }
                 }
                 Files.write(versionFile.toPath(), plugin.getDescription().getVersion().getBytes());
+            }
+
+            // Clear web/download folder
+            final File downloadDir = new File(targetDir, DOWNLOAD_DIRECTORY);
+            if (downloadDir.exists()) {
+                Files.walkFileTree(downloadDir.toPath(), new SimpleFileVisitor<>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        Files.delete(file);
+                        return super.visitFile(file, attrs);
+                    }
+                });
             }
 
             // Create resource handler to handle requests
