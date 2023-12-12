@@ -95,13 +95,15 @@ public class FileUploadServlet extends HttpServlet {
         String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
         Path outputFile = outputDir.resolve(encodedFileName);
         try (InputStream inputStream = filePart.getInputStream();
-             OutputStream outputStream = Files.newOutputStream(outputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+            OutputStream outputStream = Files.newOutputStream(outputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             final long maxSize = plugin.getSettings().getLimitSettings().getMaxFileSize();
             if (inputStream.available() > maxSize) {
+                Files.delete(outputFile);
                 sendReply(servletResponse, 400, "Invalid schematic; too large. (Max size: " + (maxSize / 1024) + "KiB)");
                 return;
             }
             if (!GZipUtil.isGZipped(inputStream)) {
+                Files.delete(outputFile);
                 sendReply(servletResponse, 400, "Invalid schematic format.");
                 return;
             }
