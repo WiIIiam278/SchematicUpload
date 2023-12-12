@@ -36,6 +36,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Level;
 
 @Getter
@@ -43,6 +44,8 @@ import java.util.logging.Level;
 @NoArgsConstructor
 public class SchematicUpload extends JavaPlugin implements ConfigProvider, CommandProvider, WebServerProvider,
         MetricsProvider, UploadProvider {
+
+    public static final List<String> ALLOWED_EXTENSIONS = List.of(".schem", ".schematic", ".litematic");
 
     private Settings settings;
     private Locales locales;

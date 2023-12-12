@@ -19,6 +19,7 @@
 
 package net.william278.schematicupload.command;
 
+import com.google.common.collect.Lists;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.william278.desertwell.about.AboutMenu;
@@ -33,7 +34,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class UploadCommand implements CommandExecutor, TabExecutor {
 
@@ -117,16 +121,13 @@ public class UploadCommand implements CommandExecutor, TabExecutor {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
                                       @NotNull String alias, String[] args) {
-        final Player player = (Player) sender;
-        if (!player.hasPermission("schematicupload.command")) {
+        if (args.length > 1 || !sender.hasPermission("schematicupload.command")) {
             return List.of();
         }
-        if (args.length == 1) {
-            final List<String> tabCompletions = new ArrayList<>();
-            StringUtil.copyPartialMatches(args[0], tabCompletions, TAB_COMPLETIONS);
-            Collections.sort(tabCompletions);
-            return tabCompletions;
-        }
-        return List.of();
+
+        final List<String> completions = Lists.newArrayList();
+        StringUtil.copyPartialMatches(args[0], completions, TAB_COMPLETIONS);
+        Collections.sort(completions);
+        return completions;
     }
 }
