@@ -78,7 +78,8 @@ const isFileValid = () => {
     }
 
     /* Only accept certain formats */
-    if (!(uploadedFile.endsWith('.schem') || uploadedFile.endsWith('.schematic'))) {
+    const allowedExtensions = /(\.schem|\.schematic|\.litematic)$/i;
+    if (!allowedExtensions.exec(uploadedFile)) {
         return false;
     }
 

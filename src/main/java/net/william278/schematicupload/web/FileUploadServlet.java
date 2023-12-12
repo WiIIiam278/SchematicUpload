@@ -19,6 +19,7 @@
 
 package net.william278.schematicupload.web;
 
+import goldendelicios.lite2edit.Converter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,6 @@ import lombok.AllArgsConstructor;
 import net.william278.schematicupload.SchematicUpload;
 import net.william278.schematicupload.upload.UploadManager;
 import net.william278.schematicupload.util.GZipUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.eclipse.jetty.util.IO;
 import org.eclipse.jetty.util.StringUtil;
@@ -40,10 +40,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class FileUploadServlet extends HttpServlet {
+    private static final List<String> ALLOWED_EXTENSIONS = List.of(".schem", ".schematic", ".litematic");
 
     private final SchematicUpload plugin;
 
@@ -77,7 +82,7 @@ public class FileUploadServlet extends HttpServlet {
 
         // Process and validate the file
         Part filePart = servletRequest.getPart("file-upload");
-        final String fileName = code + "-" + filePart.getSubmittedFileName();
+        String fileName = code + "-" + filePart.getSubmittedFileName();
         if (StringUtil.isBlank(fileName)) {
             sendReply(servletResponse, 400, "Invalid file name (empty)");
             return;
@@ -86,7 +91,7 @@ public class FileUploadServlet extends HttpServlet {
             sendReply(servletResponse, 400, "Invalid file name (too long)");
             return;
         }
-        if (!(fileName.endsWith(".schem") || fileName.endsWith(".schematic"))) {
+        if (ALLOWED_EXTENSIONS.stream().noneMatch(fileName::endsWith)) {
             sendReply(servletResponse, 400, "Invalid file type extension");
             return;
         }
@@ -95,30 +100,47 @@ public class FileUploadServlet extends HttpServlet {
         String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
         Path outputFile = outputDir.resolve(encodedFileName);
         try (InputStream inputStream = filePart.getInputStream();
-            OutputStream outputStream = Files.newOutputStream(outputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+             OutputStream outputStream = Files.newOutputStream(
+                     outputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING
+             )) {
             final long maxSize = plugin.getSettings().getLimitSettings().getMaxFileSize();
             if (inputStream.available() > maxSize) {
                 Files.delete(outputFile);
                 sendReply(servletResponse, 400, "Invalid schematic; too large. (Max size: " + (maxSize / 1024) + "KiB)");
                 return;
             }
-            if (!GZipUtil.isGZipped(inputStream)) {
+
+            // Convert litematic files if needed
+            if (!fileName.endsWith(".litematic")) {
+                if (!GZipUtil.isGZipped(inputStream)) {
+                    Files.delete(outputFile);
+                    sendReply(servletResponse, 400, "Invalid schematic format.");
+                    return;
+                }
+                IO.copy(inputStream, outputStream);
+            } else {
+                IO.copy(inputStream, outputStream);
+                final List<File> converted = Converter.litematicToWorldEdit(
+                        outputFile.toFile(), outputFile.toFile().getParentFile()
+                );
                 Files.delete(outputFile);
-                sendReply(servletResponse, 400, "Invalid schematic format.");
-                return;
+                fileName = converted.stream().map(File::getName).collect(Collectors.joining(" "));
             }
-            IO.copy(inputStream, outputStream);
         }
 
-        // Send confirmation back to the site and to the user if they are in-game still
-        consumptionResult.user().ifPresent(user -> {
+        // Validate the upload occurred successfully
+        final Optional<UUID> result = consumptionResult.user();
+        if (result.isPresent()) {
+            final UUID user = result.get();
             plugin.getUploadManager().markAsUploaded(user); // Mark them as uploaded to rate limit
-            Player player = Bukkit.getServer().getPlayer(user);
+            Player player = plugin.getServer().getPlayer(user);
             if (player != null) {
                 plugin.sendMessage(player, "schematic_upload_complete",
                         String.format("//schem load %s", fileName));
             }
-        });
+        }
+
+        // Send reply
         sendReply(servletResponse, 200, fileName);
     }
 
