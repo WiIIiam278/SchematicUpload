@@ -49,9 +49,6 @@ jobs:
           modrinth-dependencies: |
             worldedit | suggests | *
             fastasyncworldedit | suggests | *
-          hangar-id: William278/SchematicUpload
-          hangar-token: ${{ secrets.HANGAR_API_KEY }}
-          hangar-version-type: Alpha
           files-primary: target/SchematicUpload-*.jar
           name: SchematicUpload v${{ env.version_name }}
           version: ${{ env.version_name }}
