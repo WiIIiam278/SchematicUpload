@@ -31,7 +31,7 @@ dependencies {
     implementation 'net.william278:DesertWell:2.0.4'
     implementation 'org.bstats:bstats-bukkit:3.0.2'
     implementation 'com.github.Exlll.ConfigLib:configlib-yaml:v4.3.0'
-    implementation 'de.themoep:minedown-adventure:1.7.1-SNAPSHOT'
+    implementation 'de.themoep:minedown-adventure:1.7.2-SNAPSHOT'
     implementation 'net.kyori:adventure-platform-bukkit:4.3.1'
 
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
