@@ -44,7 +44,7 @@
                     <div id="form-inputs">
                         <div class="input-row">
                             <label for="file-upload">Choose file:</label>
-                            <input required id="file-upload" name="file-upload" type="file" accept=".schem,.schematic"/>
+                            <input required id="file-upload" name="file-upload" type="file" accept=".schem,.schematic,.litematic"/>
                             <script type="module">
                                 import renderSchematic from './preview/src/webschematics.js';
 
@@ -65,7 +65,7 @@
                             <input required id="input-code" name="input-code" type="text"/>
                         </div>
                     </div>
-                    <p>Accepted formats: <code>.schem</code>, <code>.schematic</code></p>
+                    <p>Accepted formats: <code>.schem</code>, <code>.schematic</code>, <code>.litematic</code></p>
                     <input type="submit" value="Upload" id="upload-button"/>
                 </form>
                 <div id="preview-panel">
