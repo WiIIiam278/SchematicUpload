@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.william278:DesertWell:2.0.3'
+    implementation 'net.william278:DesertWell:2.0.4'
     implementation 'org.bstats:bstats-bukkit:3.0.2'
     implementation 'com.github.Exlll.ConfigLib:configlib-yaml:v4.3.0'
     implementation 'de.themoep:minedown-adventure:1.7.1-SNAPSHOT'
