@@ -50,6 +50,7 @@ import static net.william278.schematicupload.SchematicUpload.ALLOWED_EXTENSIONS;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class FileUploadServlet extends HttpServlet {
+    private static final List<String> ALLOWED_EXTENSIONS = List.of(".schem", ".schematic", ".litematic");
 
     private final SchematicUpload plugin;
 
