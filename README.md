@@ -24,6 +24,8 @@
 If you've ever run a build or creative server and have had to respond to annoying requests to import a player's
 schematic, this is the plugin for you.
 
+![Screenshot of the web interface](images/web-interface.png)
+
 ## Features
 **⭐ Easy-to-use** &mdash; Incredibly simple to use web interface for uploading schematics.
 
@@ -39,7 +41,6 @@ Players simply type the `/schematicupload` command in-game that sends them a lin
 authentication code. On the panel, all the player needs to do is choose the file and press "Upload." The schematic will
 be checked and uploaded to the schematics' folder in-game.
 
-![Screenshot of the web interface](images/web-interface.png)
 ![Screenshot of the in-game command](images/in-game-command.png)
 
 ## Commands
