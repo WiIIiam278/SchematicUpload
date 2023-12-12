@@ -31,6 +31,8 @@ schematic, this is the plugin for you.
 
 **⭐ Super easy to configure** &mdash; Simply set a port and hostname!
 
+**⭐ Downloads, too!** &mdash; Let users both download and upload schematics!
+
 **⭐ Less hassle for players** &mdash; No more annoying requests to manually upload schematics!
 
 **⭐ Great admin features** &mdash; Limit how many schematics a player can upload over a given timeframe.
