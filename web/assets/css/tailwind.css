@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Scrollbar style rules (font, bg color) */
+html {
+    color-scheme: dark;
+    margin-right: calc(-1 * (100vw - 100%));
+}
+
+/* Default link styling */
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    filter: brightness(85%);
+}
+
+/* Disable SVG pointer events and fix coloring */
+object {
+    pointer-events: none;
+    color-scheme: light;
+}
