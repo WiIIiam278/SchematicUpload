@@ -1,0 +1,25 @@
+{
+  "name": "schematicupload-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/google-fonts": "^3.1.2",
+    "autoprefixer": "^10.4.16",
+    "nuxt": "^3.8.2",
+    "postcss": "^8.4.32",
+    "@nuxtjs/tailwindcss": "^6.10.1",
+    "vue": "^3.3.10",
+    "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "nuxt-icon": "^0.4.0"
+  }
+}
