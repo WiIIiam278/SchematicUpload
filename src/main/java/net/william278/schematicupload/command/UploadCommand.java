@@ -23,7 +23,6 @@ import com.google.common.collect.Lists;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.william278.desertwell.about.AboutMenu;
-import net.william278.desertwell.util.Version;
 import net.william278.schematicupload.SchematicUpload;
 import net.william278.schematicupload.upload.UploadCode;
 import org.bukkit.command.Command;
@@ -36,7 +35,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class UploadCommand implements TabExecutor {
 
@@ -48,8 +46,8 @@ public class UploadCommand implements TabExecutor {
         this.plugin = plugin;
         this.aboutMenu = AboutMenu.builder()
                 .title(Component.text("SchematicUpload"))
-                .description(Component.text(Objects.requireNonNull(plugin.getDescription().getDescription())))
-                .version(Version.fromString(plugin.getDescription().getVersion()))
+                .description(plugin.getPluginDescription())
+                .version(plugin.getPluginVersion())
                 .credits("Author",
                         AboutMenu.Credit.of("William278").description("Click to visit website").url("https://william278.net"))
                 .buttons(

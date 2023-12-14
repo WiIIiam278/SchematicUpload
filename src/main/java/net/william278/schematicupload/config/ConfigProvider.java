@@ -25,6 +25,7 @@ import de.exlll.configlib.YamlConfigurationStore;
 import de.exlll.configlib.YamlConfigurations;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.william278.schematicupload.SchematicUpload;
 import org.bukkit.entity.Player;
@@ -63,7 +64,7 @@ public interface ConfigProvider {
 
     default void sendMessage(@NotNull Player player, @NotNull String message, @NotNull String... placeholders) {
         getLocales().getLocale(message, placeholders)
-                .ifPresent(locale -> getAudiences().player(player)
+                .ifPresent(locale -> getAudience(player)
                         .sendMessage(locale.toComponent()));
     }
 
@@ -85,6 +86,11 @@ public interface ConfigProvider {
 
     @NotNull
     BukkitAudiences getAudiences();
+
+    @NotNull
+    default Audience getAudience(@NotNull Player player) {
+        return getAudiences().player(player);
+    }
 
     void setAudiences(@NotNull BukkitAudiences audiences);
 

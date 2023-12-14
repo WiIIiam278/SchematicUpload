@@ -29,6 +29,7 @@ import net.william278.schematicupload.config.Locales;
 import net.william278.schematicupload.config.Settings;
 import net.william278.schematicupload.upload.UploadManager;
 import net.william278.schematicupload.upload.UploadProvider;
+import net.william278.schematicupload.util.MetaProvider;
 import net.william278.schematicupload.util.MetricsProvider;
 import net.william278.schematicupload.web.WebServer;
 import net.william278.schematicupload.web.WebServerProvider;
@@ -43,7 +44,7 @@ import java.util.logging.Level;
 @Setter
 @NoArgsConstructor
 public class SchematicUpload extends JavaPlugin implements ConfigProvider, CommandProvider, WebServerProvider,
-        MetricsProvider, UploadProvider {
+        MetricsProvider, UploadProvider, MetaProvider {
 
     public static final List<String> ALLOWED_EXTENSIONS = List.of(".schem", ".schematic", ".litematic");
 
@@ -55,7 +56,7 @@ public class SchematicUpload extends JavaPlugin implements ConfigProvider, Comma
 
     @Override
     public void onEnable() {
-        log(Level.INFO, "Enabling SchematicUpload v" + getDescription().getVersion());
+        log(Level.INFO, "Enabling SchematicUpload v" + getPluginVersion());
         loadAudiences();
         loadSettings();
         loadLocales();
@@ -63,7 +64,7 @@ public class SchematicUpload extends JavaPlugin implements ConfigProvider, Comma
         loadWebServer();
         loadUploadManager();
         loadMetrics();
-        log(Level.INFO, "SchematicUpload v" + getDescription().getVersion() + " has been enabled");
+        log(Level.INFO, "SchematicUpload v" + getPluginVersion() + " has been enabled");
     }
 
     @Override
