@@ -8,9 +8,10 @@
         <p class="mb-2 text-accent dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
         <p class="text-sm text-lite-gray dark:text-gray-400">Supported formats: <code>.schem</code>, <code>.schematic</code>, <code>.litematic</code></p>
       </div>
-      <input id="dropzone-file" type="file" class="hidden" />
+      <input id="dropzone-file" type="file" class="hidden" accept=".schem,.schematic,.litematic" @change="$emit('schematicSelected', $event.target.files[0])">
     </label>
   </div>
 </template>
+
 <script setup lang="ts">
 </script>
