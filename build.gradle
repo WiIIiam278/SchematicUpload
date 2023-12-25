@@ -39,7 +39,7 @@ dependencies {
     implementation 'org.bstats:bstats-bukkit:3.0.2'
     implementation 'com.github.Exlll.ConfigLib:configlib-yaml:v4.3.0'
     implementation 'de.themoep:minedown-adventure:1.7.2-SNAPSHOT'
-    implementation 'net.kyori:adventure-platform-bukkit:4.3.1'
+    implementation 'net.kyori:adventure-platform-bukkit:4.3.2'
     implementation 'com.github.GoldenDelicios:Lite2Edit:v1.1.1'
 
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
