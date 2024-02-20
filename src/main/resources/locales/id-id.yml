@@ -1,0 +1,9 @@
+locales:
+  error_no_permission: '[Kesalahan:](#ff3300) [Kamu tidak memiliki izin untuk menjalankan perintah itu.](#ff7e5e)'
+  error_invalid_syntax: '[Kesalahan:](#ff3300) [Sintaks tidak valid. Penggunaan:](#ff7e5e) [%1%](#ff7e5e italic suggest_command=%1%)'
+  error_download_too_big: '[Kesalahan:](#ff3300) [Schematic itu terlalu besar untuk diunduh.](#ff7e5e)'
+  error_download_failed: '[Kesalahan:](#ff3300) [Gagal menyiapkan schematic untuk diunduh.](#ff7e5e)'
+  schematic_upload_prompt: '[Unggah Schematic](#00fb9a bold)\n[•](white) [[Klik disini]](#00fb9a open_url=%1% show_text=&#00fb9a&Klik untuk membuka di Browser) [untuk mengunggah schematic mu](gray)\n[•](white) [Atau, kunjungi](gray) [%2%](gray open_url=%2% show_text=&7Klik untuk membuka di Browser) [dan masukkan kode ini:](gray) [%3%](#00fb9a show_text=&#00fb9a&Klik untuk menaruh di kotak chat suggest_command=%3%)'
+  schematic_upload_complete: '[Schematic diunggah](#00fb9a bold)\n[•](white) [Schematic mu berhasil diunggah.](gray)\n[•](white) [Untuk menyalin ke papan klip WorldEdit, ketik:](gray)\n[%1%](#00fb9a show_text=&#00fb9a&Klik untuk menyarankan perintah suggest_command=%1%)'
+  schematic_download_prompt: '[Unduh Schematic](#00fb9a bold)\n[•](white) [[Klik disini]](#00fb9a open_url=%1% show_text=&#00fb9a&Klik untuk membuka di Browser) [untuk mengunduh schematic mu](gray)\n[•](white) [Atau, kunjungi:](gray) [%1%](#00fb9a underline)\n[•](white) [Link unduh akan kadaluarsa dalam %2% menit.](gray)'
+  config_reloaded: '[SchematicUpload](#00fb9a bold) [| File konfigurasi & lokal disegarkan.](#00fb9a)'
